@@ -1,4 +1,4 @@
-#include "../include/navigation.h"
+#include "./include/navigation.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,26 +6,10 @@
 #define MAX_ROWS 100 // Maximum number of map rows
 #define MAX_COLS 100 // Maximum number of map cols
 
-typedef struct map {
-    int sz_x;
-    int sz_y;
-    int map_data[MAX_ROWS][MAX_COLS]; 
-} tMap;
-
-typedef struct pos {
-    int x;
-    int y;
-} tPos;
-
-typedef struct path {
-    int num_coords;
-    tPos path[MAX_COORDS];
-} tPath;
-
 tPath read_coordinates(void) {
     tPath path;
 
-    FILE *file = fopen("../data/path.txt", "r");
+    FILE *file = fopen("./data/path.txt", "r");
     if (file == NULL) {
         fprintf(stderr, "Error opening file!");
         exit(1);
@@ -45,7 +29,7 @@ tPath read_coordinates(void) {
 
 tMap read_map_from_file(void) {
     tMap map;
-    FILE *file = fopen("../data/map.txt", "r");
+    FILE *file = fopen("./data/map.txt", "r");
     if (file == NULL) {
         fprintf(stderr, "Error opening file!");
         exit(1);
