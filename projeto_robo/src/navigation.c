@@ -1,4 +1,6 @@
 #include "./include/navigation.h"
+#include "./include/info.h"
+#include "./include/list.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -98,4 +100,62 @@ void print_map(void) {
         }
         printf("\n");
     }
+}
+
+void charge_impossible(int actual[2]) {
+    // Ler o mapa do arquivo
+    tMap map = read_map_from_file();
+
+    // Obter a matriz de dados do mapa
+    int **map_data = get_map();
+
+    // Obter a posição atual
+    int row = actual[0];
+    int col = actual[1];
+
+    // Verificar se a cor na posição atual é igual a 1
+    if (map.map_data[row][col] == 1) {
+        int color = map.map_data[row][col];
+
+        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+
+        // Abrir o arquivo para escrita
+        FILE *file = fopen("./data/charge_impossible.txt", "a");
+        if (file == NULL) {
+            fprintf(stderr, "Error opening file for writing!\n");
+            return;
+        }
+
+        // Escrever a cor no arquivo
+        fprintf(file, "Color %d found at position (%d, %d)\nImposible to charge\n", color, row, col);
+        fclose(file);
+
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+    }
+}
+
+void list_way(int actual[2]) {
+
+    tList list = create_list();
+
+    // Ler o mapa do arquivo
+    tMap map = read_map_from_file();
+
+    // Obter a matriz de dados do mapa
+    int **map_data = get_map();
+
+    // Obter a posição atual
+    int row = actual[0];
+    int col = actual[1];
+
+    int color = map.map_data[row][col];
+    switch (color)
+    {
+    case '255': insert_list(&list, "free_to_go"); break;
+    case '191': insert_list(&list, "gold"); break;
+    case '127': insert_list(&list, "silver"); break;
+    case '63':  insert_list(&list, "bronze"); break;
+    case '1' :  insert_list(&list, "charging_impossible"); break;  
+    }
+    print_list(&list);
 }

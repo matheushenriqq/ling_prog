@@ -1,31 +1,24 @@
+#include "./include/list.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-
-typedef struct node {
-    int data;
-    struct node* next;
-} tNode;
-
-typedef struct list {
-    tNode* first_elem;
-} tList;
 
 // Insert element at the beggining
-void insert_list(tList *list, int new_data) {
+void insert_list(tList *list, const char* new_data) {
     tNode* new_node = (tNode*) malloc(sizeof(tNode));
     if (new_node == NULL) {
         printf("Error: No space left in memory.\n");
         return;
     }
 
-    new_node->data = new_data;
+    new_node->data = strdup(new_data); // Allocate memory for the string and copy data
     new_node->next = list->first_elem; // Set next of new node
     list->first_elem = new_node; // Update list external pointer to new node
 }
 
 // Remove an element of value del_data
-void remove_list(tList *list, int del_data) {
+void remove_list(tList *list, const char* del_data) {
     // Check if the list is empty
     if (list->first_elem == NULL) {
         printf("Cannot delete from an empty list.\n");
@@ -36,7 +29,7 @@ void remove_list(tList *list, int del_data) {
     tNode* prev = NULL;
 
     // Traverse the list to find the node to delete
-    while (current != NULL && current->data != del_data) {
+    while (current != NULL && strcmp(current->data, del_data) != 0) {
         prev = current;
         current = current->next;
     }
@@ -50,9 +43,10 @@ void remove_list(tList *list, int del_data) {
             prev->next = current->next;  // Link the previous node to the next of the current node
         }
     
+        free(current->data); // Free memory allocated for the string
         free(current);  // Free memory allocated for the node
     } else {
-        printf("Node with data %d not found in the list.\n", del_data);
+        printf("Node with data %s not found in the list.\n", del_data);
     }
 }
 
@@ -64,7 +58,8 @@ void free_list(tList *list) {
     while (current != NULL) {
         temp = current;
         current = current->next;
-        free(temp);  // Free memory allocated for each node
+        free(temp->data);  // Free memory allocated for the string
+        free(temp);  // Free memory allocated for the node
     }
 
     list->first_elem = NULL;  // Set list pointer to NULL after freeing all nodes
@@ -76,7 +71,7 @@ void print_list(tList *list) {
 
     printf("List elements: ");
     while (current != NULL) {
-        printf("%d ", current->data);
+        printf("%s ", current->data);
         current = current->next;
     }
     printf("\n");
@@ -88,3 +83,4 @@ tList create_list() {
     list.first_elem = NULL;  // Initialize the list with NULL pointer
     return list;
 }
+
