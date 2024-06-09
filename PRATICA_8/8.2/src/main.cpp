@@ -13,7 +13,7 @@ int main() {
 
     list.remove(40); // Output: Node with data 40 not found in the list.
 
-    list.free();
+    list.~List();
     list.print(); // Output: List elements: 
 
     return 0;

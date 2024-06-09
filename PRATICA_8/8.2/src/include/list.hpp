@@ -3,35 +3,33 @@
 
 #include <iostream>
 
-// Definição do Nó
+// Node definition
 struct Node {
     int data;
     Node* next;
 };
 
-// Definição da Lista
+// List definition
 class List {
 public:
-    // Construtor
+    // Constructor
     List();
 
-    // Destrutor
+    // Destructor
     ~List();
 
-    // Método para inserir um novo dado na lista
+    // Method to insert a new data into the list
     void insert(int new_data);
 
-    // Método para remover um dado específico da lista
+    // Method to remove a specific data from the list
     void remove(int del_data);
 
-    // Método para liberar todos os nós da lista
-    void free();
-
-    // Método para imprimir os elementos da lista
+    // Method to print the elements of the list
     void print() const;
 
 private:
-    Node* first_elem; // Ponteiro para o primeiro elemento da lista
+    Node* first_elem; // Pointer to the first element of the list
+    void free(); // Method to free all nodes of the list (private)
 };
 
 #endif // LIST_HPP
