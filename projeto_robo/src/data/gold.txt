@@ -1,0 +1,2 @@
+Color 191 found at position (3, 1)
+gold

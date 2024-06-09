@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #define MAX_COORDS 1000 // Maximum number of coordinates
 #define MAX_ROWS 100 // Maximum number of map rows
 #define MAX_COLS 100 // Maximum number of map cols
@@ -102,6 +103,19 @@ void print_map(void) {
     }
 }
 
+#include <stdio.h>
+
+void clear_file(const char *filepath) {
+    FILE *file = fopen(filepath, "w");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+    // No need to write anything; opening in "w" mode clears the file
+    fclose(file);
+    printf("File %s cleared.\n", filepath);
+}
+
 void charge_impossible(int actual[2]) {
     // Ler o mapa do arquivo
     tMap map = read_map_from_file();
@@ -134,9 +148,7 @@ void charge_impossible(int actual[2]) {
     }
 }
 
-void list_way(int actual[2]) {
-
-    tList list = create_list();
+void list_way(tList *list, int actual[2]) {
 
     // Ler o mapa do arquivo
     tMap map = read_map_from_file();
@@ -151,11 +163,122 @@ void list_way(int actual[2]) {
     int color = map.map_data[row][col];
     switch (color)
     {
-    case '255': insert_list(&list, "free_to_go"); break;
-    case '191': insert_list(&list, "gold"); break;
-    case '127': insert_list(&list, "silver"); break;
-    case '63':  insert_list(&list, "bronze"); break;
-    case '1' :  insert_list(&list, "charging_impossible"); break;  
+    case 255: insert_list(list, "free_2_go"); break;
+    case 191: insert_list(list, "gold"); break;
+    case 127: insert_list(list, "silver"); break;
+    case 63:  insert_list(list, "bronze"); break;
+    case 1:   insert_list(list, "charge_impossible"); break;  
     }
-    print_list(&list);
+
+    tNode* current = list->first_elem;
+
+    FILE *file = fopen("./data/list_way.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+
+    fprintf(file, "List elements:\n");
+    while (current != NULL) {
+        fprintf(file, "%s\n", current->data);
+        current = current->next;
+    }
+
+    fclose(file);
+}
+    
+void gold(int actual[2]) {
+    // Ler o mapa do arquivo
+    tMap map = read_map_from_file();
+
+    // Obter a matriz de dados do mapa
+    int **map_data = get_map();
+
+    // Obter a posição atual
+    int row = actual[0];
+    int col = actual[1];
+
+    // Verificar se a cor na posição atual é igual a 1
+    if (map.map_data[row][col] == 191) {
+        int color = map.map_data[row][col];
+
+        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+
+        // Abrir o arquivo para escrita
+        FILE *file = fopen("./data/gold.txt", "a");
+        if (file == NULL) {
+            fprintf(stderr, "Error opening file for writing!\n");
+            return;
+        }
+
+        // Escrever a cor no arquivo
+        fprintf(file, "Color %d found at position (%d, %d)\ngold\n", color, row, col);
+        fclose(file);
+
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+    }
+}
+
+void silver(int actual[2]) {
+    // Ler o mapa do arquivo
+    tMap map = read_map_from_file();
+
+    // Obter a matriz de dados do mapa
+    int **map_data = get_map();
+
+    // Obter a posição atual
+    int row = actual[0];
+    int col = actual[1];
+
+    // Verificar se a cor na posição atual é igual a 1
+    if (map.map_data[row][col] == 127) {
+        int color = map.map_data[row][col];
+
+        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+
+        // Abrir o arquivo para escrita
+        FILE *file = fopen("./data/silver.txt", "a");
+        if (file == NULL) {
+            fprintf(stderr, "Error opening file for writing!\n");
+            return;
+        }
+
+        // Escrever a cor no arquivo
+        fprintf(file, "Color %d found at position (%d, %d)\nsilver\n", color, row, col);
+        fclose(file);
+
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+    }
+}
+
+void bronze(int actual[2]) {
+    // Ler o mapa do arquivo
+    tMap map = read_map_from_file();
+
+    // Obter a matriz de dados do mapa
+    int **map_data = get_map();
+
+    // Obter a posição atual
+    int row = actual[0];
+    int col = actual[1];
+
+    // Verificar se a cor na posição atual é igual a 1
+    if (map.map_data[row][col] == 63) {
+        int color = map.map_data[row][col];
+
+        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+
+        // Abrir o arquivo para escrita
+        FILE *file = fopen("./data/bronze.txt", "a");
+        if (file == NULL) {
+            fprintf(stderr, "Error opening file for writing!\n");
+            return;
+        }
+
+        // Escrever a cor no arquivo
+        fprintf(file, "Color %d found at position (%d, %d)\ngold\n", color, row, col);
+        fclose(file);
+
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+    }
 }
