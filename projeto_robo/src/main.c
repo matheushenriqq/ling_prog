@@ -11,7 +11,7 @@ int main() {
     tList lista = create_list();
     Battery bateria;
 
-    int actual[2] = {0, 0};
+    int actual[2] = {1, 1};
     int next_pos[2] = {-1, -1};
 
     clear_file("./data/bronze.txt");
