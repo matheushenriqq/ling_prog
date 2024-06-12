@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./include/info.h"
 #include "./include/navigation.h"
 #include "./include/list.h"
 #include "./include/battery.h"
@@ -11,7 +10,7 @@ int main() {
     tList lista = create_list();
     Battery bateria;
 
-    int actual[2] = {1, 1};
+    int actual[2] = {0, 0};
     int next_pos[2] = {-1, -1};
 
     clear_file("./data/bronze.txt");
@@ -21,11 +20,13 @@ int main() {
     clear_file("./data/silver.txt");
 
     while (actual[0] != 7 || actual[1] != 6) {
+
+        manage_battery_on_move(&map_data, &bateria, actual,next_pos);
         get_next_pos(map_data, actual, next_pos);
 
         // Verifique se a posição é válida antes de atualizar
-        if (next_pos[0] != -1 && next_pos[1] != -1) {
-            printf("Actual Position: (%d,%d)\n", actual[0], actual[1]);
+    
+            
             printf("Next Coordinate: (%d,%d)\n", next_pos[0], next_pos[1]);
 
             // Verificar e gerar o arquivo se necessário
@@ -34,15 +35,10 @@ int main() {
             gold(actual);
             silver(actual);
             bronze(actual);
-            manage_battery_on_move (get_map, &bateria, actual, next_pos);
             // Atualize a posição atual
             actual[0] = next_pos[0];
             actual[1] = next_pos[1];
-        } else {
-            // Caso contrário, saia do loop ou trate o erro de outra forma
-            printf("Invalid next position. Exiting.\n");
-            break;
-        }
+        
     }
     
     printf("Reached the target position: (%d,%d)\n", actual[0], actual[1]);
@@ -50,5 +46,5 @@ int main() {
 
 
 
-    return 0;
+    
 }

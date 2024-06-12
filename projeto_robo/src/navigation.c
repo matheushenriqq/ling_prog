@@ -1,5 +1,5 @@
 #include "./include/navigation.h"
-#include "./include/info.h"
+
 #include "./include/list.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -124,14 +124,14 @@ void charge_impossible(int actual[2]) {
     int **map_data = get_map();
 
     // Obter a posição atual
-    int row = actual[0];
-    int col = actual[1];
+    int y = actual[1];
+    int x = actual[0];
 
     // Verificar se a cor na posição atual é igual a 1
-    if (map.map_data[row][col] == 1) {
-        int color = map.map_data[row][col];
+    if (map.map_data[8 - y][x] == 1) {
+        int color = map.map_data[8 - y][x];
 
-        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+        printf("Checking color at position (%d, %d): %d\n", x, y, color);
 
         // Abrir o arquivo para escrita
         FILE *file = fopen("./data/charge_impossible.txt", "a");
@@ -141,10 +141,10 @@ void charge_impossible(int actual[2]) {
         }
 
         // Escrever a cor no arquivo
-        fprintf(file, "Color %d found at position (%d, %d)\nImposible to charge\n", color, row, col);
+        fprintf(file, "Color %d found at position (%d, %d)\nImposible to charge\n", color, x, y);
         fclose(file);
 
-        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, x, y);
     }
 }
 
@@ -157,10 +157,10 @@ void list_way(tList *list, int actual[2]) {
     int **map_data = get_map();
 
     // Obter a posição atual
-    int row = actual[0];
-    int col = actual[1];
+    int y =  actual[1];
+    int x =  actual[0];
 
-    int color = map.map_data[row][col];
+    int color = map.map_data[8 - y][x];
     switch (color)
     {
     case 255: insert_list(list, "free_2_go"); break;
@@ -195,14 +195,14 @@ void gold(int actual[2]) {
     int **map_data = get_map();
 
     // Obter a posição atual
-    int row = actual[0];
-    int col = actual[1];
+    int y = actual[1];
+    int x = actual[0];
 
     // Verificar se a cor na posição atual é igual a 1
-    if (map.map_data[row][col] == 191) {
-        int color = map.map_data[row][col];
+    if (map.map_data[8 - y][x] == 191) {
+        int color = map.map_data[8 - y][x];
 
-        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+        printf("Checking color at position (%d, %d): %d\n", x, y, color);
 
         // Abrir o arquivo para escrita
         FILE *file = fopen("./data/gold.txt", "a");
@@ -212,10 +212,10 @@ void gold(int actual[2]) {
         }
 
         // Escrever a cor no arquivo
-        fprintf(file, "Color %d found at position (%d, %d)\ngold\n", color, row, col);
+        fprintf(file, "Color %d found at position (%d, %d)\ngold\n", color, x, y);
         fclose(file);
 
-        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, x, y);
     }
 }
 
@@ -227,14 +227,14 @@ void silver(int actual[2]) {
     int **map_data = get_map();
 
     // Obter a posição atual
-    int row = actual[0];
-    int col = actual[1];
+    int x =  actual[0];
+    int y =  actual[1];
 
     // Verificar se a cor na posição atual é igual a 1
-    if (map.map_data[row][col] == 127) {
-        int color = map.map_data[row][col];
+    if (map.map_data[8 - y][x] == 127) {
+        int color = map.map_data[8 - y][x];
 
-        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+        printf("Checking color at position (%d, %d): %d\n", x, y, color);
 
         // Abrir o arquivo para escrita
         FILE *file = fopen("./data/silver.txt", "a");
@@ -244,10 +244,10 @@ void silver(int actual[2]) {
         }
 
         // Escrever a cor no arquivo
-        fprintf(file, "Color %d found at position (%d, %d)\nsilver\n", color, row, col);
+        fprintf(file, "Color %d found at position (%d, %d)\nsilver\n", color, x, y);
         fclose(file);
 
-        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, x, y);
     }
 }
 
@@ -259,14 +259,14 @@ void bronze(int actual[2]) {
     int **map_data = get_map();
 
     // Obter a posição atual
-    int row = actual[0];
-    int col = actual[1];
+    int x = actual[0];
+    int y = actual[1];
 
-    // Verificar se a cor na posição atual é igual a 1
-    if (map.map_data[row][col] == 63) {
-        int color = map.map_data[row][col];
+    // Verificar se a cor na posição atual é igual a 63
+    if (map.map_data[8 - y][x] == 63) {
+        int color = map.map_data[8 - y][x];
 
-        printf("Checking color at position (%d, %d): %d\n", row, col, color);
+        printf("Checking color at position (%d, %d): %d\n", x, y, color);
 
         // Abrir o arquivo para escrita
         FILE *file = fopen("./data/bronze.txt", "a");
@@ -276,9 +276,9 @@ void bronze(int actual[2]) {
         }
 
         // Escrever a cor no arquivo
-        fprintf(file, "Color %d found at position (%d, %d)\ngold\n", color, row, col);
+        fprintf(file, "Color %d found at position (%d, %d)\nbronze\n", color, x, y);
         fclose(file);
 
-        printf("Color %d found at position (%d, %d) and written to file.\n", color, row, col);
+        printf("Color %d found at position (%d, %d) and written to file.\n", color, x, y);
     }
 }

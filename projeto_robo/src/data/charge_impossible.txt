@@ -1,0 +1,2 @@
+Color 1 found at position (6, 3)
+Imposible to charge
