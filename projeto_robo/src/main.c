@@ -3,48 +3,64 @@
 #include "./include/navigation.h"
 #include "./include/list.h"
 #include "./include/battery.h"
+#include "./include/info.h"
 
 int main() {
-    int i;
+    int total_time = 0;
+    int total_gold = 0;
+    int total_silver = 0;
+    int total_bronze = 0;
     int **map_data = get_map();
     tList lista = create_list();
     Battery bateria;
-
     int actual[2] = {0, 0};
     int next_pos[2] = {-1, -1};
 
+    // Clear previous data files
     clear_file("./data/bronze.txt");
     clear_file("./data/charge_impossible.txt");
     clear_file("./data/gold.txt");
     clear_file("./data/list_way.txt");
     clear_file("./data/silver.txt");
+    clear_file("./data/charging.txt");
+    clear_file("./data/obstacles.txt");
 
+    // Initialize battery
+    init_battery(&bateria);
+
+    // Allocate memory for registered positions
+    Position *registered_positions = malloc(sizeof(Position) * 100); // Assuming a maximum of 100 positions for simplicity
+    int registered_count = 0;
+
+    // Main loop for navigating the map
     while (actual[0] != 7 || actual[1] != 6) {
-
-        manage_battery_on_move(&map_data, &bateria, actual,next_pos);
+        // Get the next position
         get_next_pos(map_data, actual, next_pos);
 
-        // Verifique se a posição é válida antes de atualizar
-    
-            
-            printf("Next Coordinate: (%d,%d)\n", next_pos[0], next_pos[1]);
+        // Check and generate files if necessary
+        charge_impossible(actual);
+        list_way(&lista, actual);
+        obstacles(actual, registered_positions, &registered_count);
+        total_gold += gold(actual);
+        total_silver += silver(actual);
+        total_bronze += bronze(actual);
+        total_time += manage_battery_on_move(&bateria, actual, next_pos);
 
-            // Verificar e gerar o arquivo se necessário
-            charge_impossible(actual);
-            list_way(&lista, actual);
-            gold(actual);
-            silver(actual);
-            bronze(actual);
-            // Atualize a posição atual
-            actual[0] = next_pos[0];
-            actual[1] = next_pos[1];
-        
+        // Update the current position
+        actual[0] = next_pos[0];
+        actual[1] = next_pos[1];
     }
-    
-    printf("Reached the target position: (%d,%d)\n", actual[0], actual[1]);
-    
 
+    // Print the results
+    printf("Total gold areas: %d\n", total_gold);
+    printf("Total silver areas: %d\n", total_silver);
+    printf("Total bronze areas: %d\n", total_bronze);
+    printf("Final total time: %d seconds\n", total_time);
+    printf("sucess\n");
 
-
-    
+    // Free allocated memory
+    free(registered_positions);
+    free_list(&lista);
+    free(map_data);
+    return 0;
 }

@@ -6,7 +6,7 @@
 #ifndef BATTERY_H
 #define BATTERY_H
 
-// Definições para a bateria
+// Definitions for the battery
 #define MAX_BATTERY 4
 
 typedef struct {
@@ -14,25 +14,25 @@ typedef struct {
     int top;
 } Battery;
 
-// Inicializa a bateria com capacidade máxima
+// Initialize the battery with maximum capacity
 void init_battery(Battery* battery);
 
-// Verifica se a bateria está vazia
+// Check if the battery is empty
 int is_empty(Battery* battery);
 
-// Verifica se a bateria está cheia
+// Check if the battery is full
 int is_full(Battery* battery);
 
-// Empilha (recarrega) uma unidade de bateria
+// Push (recharge) a unit of battery
 void push(Battery* battery, int value);
 
-// Desempilha (consome) uma unidade de bateria
+// Pop (consume) a unit of battery
 int pop(Battery* battery);
 
-// Obtém o nível atual da bateria
+// Get the current battery level
 int battery_level(Battery* battery);
 
-// Função de gerenciamento da bateria ao mover o robô
-void manage_battery_on_move(tMap* map, Battery* battery, int* actual, int* next_pos);
+// Battery management function when moving the robot
+int manage_battery_on_move(Battery* battery, int* actual, int* next_pos);
 
-#endif /* ROBOT_H */
+#endif /* BATTERY_H */

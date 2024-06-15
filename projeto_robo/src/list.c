@@ -3,8 +3,7 @@
 #include <string.h>
 #include "./include/list.h"
 
-
-// Insert element at the beginning
+// Insert an element at the beginning of the list
 void insert_list(tList *list, const char* new_data) {
     tNode* new_node = (tNode*) malloc(sizeof(tNode));
     if (new_node == NULL) {
@@ -14,11 +13,17 @@ void insert_list(tList *list, const char* new_data) {
 
     // Allocate memory for the string and copy data
     new_node->data = strdup(new_data);
+    if (new_node->data == NULL) {
+        printf("Error: No space left in memory for string.\n");
+        free(new_node);
+        return;
+    }
+
     new_node->next = list->first_elem; // Set next of new node
     list->first_elem = new_node; // Update list external pointer to new node
 }
 
-// Remove an element of value del_data
+// Remove an element with the specified value
 void remove_list(tList *list, const char* del_data) {
     if (list->first_elem == NULL) {
         printf("Cannot delete from an empty list.\n");
@@ -35,19 +40,19 @@ void remove_list(tList *list, const char* del_data) {
 
     if (current != NULL) {
         if (prev == NULL) {
-            list->first_elem = current->next;  
+            list->first_elem = current->next;
         } else {
-            prev->next = current->next;  
+            prev->next = current->next;
         }
-    
+
         free(current->data); // Free memory allocated for the string
-        free(current);  
+        free(current);
     } else {
         printf("Node with data %s not found in the list.\n", del_data);
     }
 }
 
-// Release allocated memory for the list
+// Release allocated memory for the entire list
 void free_list(tList *list) {
     tNode* current = list->first_elem;
     tNode* temp;
@@ -56,10 +61,10 @@ void free_list(tList *list) {
         temp = current;
         current = current->next;
         free(temp->data);  // Free memory allocated for the string
-        free(temp);  
+        free(temp);
     }
 
-    list->first_elem = NULL;  
+    list->first_elem = NULL; // Reset the list to empty
 }
 
 // Print all elements of the list
@@ -74,7 +79,7 @@ void print_list(tList *list) {
     printf("\n");
 }
 
-// List constructor
+// Create and initialize a new list
 tList create_list() {
     tList list;
     list.first_elem = NULL;  // Initialize the list with NULL pointer

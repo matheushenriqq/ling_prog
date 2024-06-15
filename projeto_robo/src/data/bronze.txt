@@ -1,4 +1,4 @@
-Color 63 found at position (4, 2)
+Bronze found at position (4, 2)
 bronze
-Color 63 found at position (7, 5)
+Bronze found at position (7, 5)
 bronze
