@@ -15,6 +15,7 @@ int main() {
     Battery bateria;
     int actual[2] = {0, 0};
     int next_pos[2] = {-1, -1};
+    int goal_position[2] = {7, 6}; //Last position at Path.txt
 
     // Clear previous data files
     Info::clear_file("./data/bronze.txt");
@@ -27,10 +28,10 @@ int main() {
 
     // Allocate memory for registered positions
     std::vector<Position> registered_positions;
-    std::cout << "First Move, 2 seconds\n";
-    total_time += MOVE_TIME;
+    tPath path = read_coordinates();
     // Main loop for navigating the map
-    while (actual[0] != 7 || actual[1] != 6) {
+    for (int i = 0; i < path.num_coords - 1; i++){
+
         // Get the next position
         get_next_pos(map_data, actual, next_pos);
 
@@ -53,7 +54,12 @@ int main() {
     std::cout << "Total silver areas: " << total_silver << "\n";
     std::cout << "Total bronze areas: " << total_bronze << "\n";
     std::cout << "Final total time: " << total_time << " seconds\n";
-    std::cout << "sucess\n";
 
+    if (actual[0] == goal_position[0] && actual[1] == goal_position[1]){
+        std::cout << "sucess\n";
+    }
+    else {
+        std::cout << "failure\n";
+    }
     return 0;
 }
