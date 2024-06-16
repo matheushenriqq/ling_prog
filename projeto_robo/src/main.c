@@ -15,6 +15,8 @@ int main() {
     Battery bateria;
     int actual[2] = {0, 0};
     int next_pos[2] = {-1, -1};
+    int goal_position[2] = {7, 6}; //Last position at Path.txt
+    
 
     // Clear previous data files
     clear_file("./data/bronze.txt");
@@ -31,9 +33,11 @@ int main() {
     // Allocate memory for registered positions
     Position *registered_positions = malloc(sizeof(Position) * 100); // Assuming a maximum of 100 positions for simplicity
     int registered_count = 0;
+    tPath path = read_coordinates();
 
     // Main loop for navigating the map
-    while (actual[0] != 7 || actual[1] != 6) {
+    for (int i = 0; i < path.num_coords - 1; i++){
+    
         // Get the next position
         get_next_pos(map_data, actual, next_pos);
 
@@ -50,13 +54,17 @@ int main() {
         actual[0] = next_pos[0];
         actual[1] = next_pos[1];
     }
-
     // Print the results
     printf("Total gold areas: %d\n", total_gold);
     printf("Total silver areas: %d\n", total_silver);
     printf("Total bronze areas: %d\n", total_bronze);
     printf("Final total time: %d seconds\n", total_time);
-    printf("sucess\n");
+    if (actual[0] == goal_position[0] && actual[1] == goal_position[1])
+        printf("sucess\n");
+    else {
+        printf ("failure");
+    }
+
 
     // Free allocated memory
     free(registered_positions);

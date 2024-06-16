@@ -80,10 +80,11 @@ int manage_battery_on_move(Battery* battery, int* actual, int* next_pos) {
         if (level > 1) {
             pop(battery);
             actual[0] = x_bat;
-            actual[1] = y_bat;
-            printf("Moved to (%d, %d), Battery: %d\n", actual[0], actual[1], battery_level(battery));
+            actual[1] = y_bat;            
             time += MOVE_TIME;
+            printf ("2 seconds for move\n");
             sleep(MOVE_TIME);
+            printf("Moved to (%d, %d), Battery: %d\n", actual[0], actual[1], battery_level(battery));
 
             // Check if the battery is at 25% or less
             if (level - 1 < 2) {
@@ -107,14 +108,17 @@ int manage_battery_on_move(Battery* battery, int* actual, int* next_pos) {
             pop(battery);
             actual[0] = x_bat;
             actual[1] = y_bat;
-            printf("Moved to (%d, %d), Battery: %d\n", actual[0], actual[1], battery_level(battery));
-            time += MOVE_TIME;
+            printf ("2 seconds for move\n");
             sleep(MOVE_TIME);
+            time += MOVE_TIME;
+            printf("Moved to (%d, %d), Battery: %d\n", actual[0], actual[1], battery_level(battery));
+            
+
         } else {
             printf("Battery too low to move to an area with impossibility of charge\n");
             // Recharge the battery before moving
             printf("Battery low. Charging at (%d, %d)\n", actual[0], actual[1]);
-            recharge_battery(battery);
+            recharge_battery(battery); 
 
             FILE *file = fopen("./data/charging.txt", "a");
             if (file) {
@@ -124,6 +128,13 @@ int manage_battery_on_move(Battery* battery, int* actual, int* next_pos) {
                 fprintf(stderr, "Failed to open charging log file\n");
             }
             time += RECHARGE_TIME;
+            pop(battery);
+            actual[0] = x_bat;
+            actual[1] = y_bat;            
+            time += MOVE_TIME;
+            printf ("2 seconds for move\n");
+            sleep(MOVE_TIME);             
+            printf("Moved to (%d, %d), Battery: %d\n", actual[0], actual[1], battery_level(battery));
         }
     }
 
