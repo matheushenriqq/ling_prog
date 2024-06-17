@@ -1,3 +1,15 @@
+/*
+Program: Experimento 9.1
+
+Author: Matheus Henrique Medeiros
+
+Date: 11/06/2024
+
+Description: Código de multiplos arquivos sendo rodados a partir do g++
+
+License: [CC BY]
+*/
+
 #include "./include/pessoa.hpp"
 #include "./include/empregado.hpp"
 #include "./include/empresa.hpp"
