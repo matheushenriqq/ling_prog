@@ -1,3 +1,17 @@
+/*
+Program: Experimento 9.2
+
+Author: Matheus Henrique Medeiros
+
+Date: 10/06/2024
+
+Description: Criando uma classe microempreendedor que seja herdeira de pessoa quanto de empresa, depois imprimindo cpf e cpnj
+
+License: [CC BY]
+*/
+
+
+
 #include "./include/pessoa.hpp"
 #include "./include/empregado.hpp"
 #include "./include/empresa.hpp"
