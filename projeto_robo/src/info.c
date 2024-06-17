@@ -166,7 +166,7 @@ int bronze(int actual[2]) {
         fprintf(file, "Bronze found at position (%d, %d)\nbronze\n", x, y);
         fclose(file);
 
-        printf("Silver found at position (%d, %d) and written to file.\n", x, y);
+        printf("Bronze found at position (%d, %d) and written to file.\n", x, y);
         count++;
     }
 
