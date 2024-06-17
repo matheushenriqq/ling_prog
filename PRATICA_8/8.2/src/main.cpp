@@ -1,6 +1,6 @@
 /*
 
-Program: Experimento 8.1
+Program: Experimento 8.2
 
 Author: Matheus Henrique Medeiros
 
