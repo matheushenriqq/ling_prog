@@ -1,3 +1,17 @@
+/*
+
+Program: Experimento 8.1
+
+Author: Matheus Henrique Medeiros
+
+Date: 10/06/2024
+
+Description: Replicando para um projeto em C++ uma lista.
+
+License: [CC BY]
+
+*/
+
 #include "./include/list.hpp"
 #include <iostream>
 

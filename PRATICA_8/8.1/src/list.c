@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "./include/list.h"
 
+//Inserir um elemento na lista
 void insert_list(tList *list, int new_data) {
     tNode* new_node = (tNode*) malloc(sizeof(tNode));
     if (new_node == NULL) {
@@ -13,7 +14,7 @@ void insert_list(tList *list, int new_data) {
     new_node->next = list->first_elem; // Set next of new node
     list->first_elem = new_node; // Update list external pointer to new node
 }
-
+//Remover um elemento da lista
 void remove_list(tList *list, int del_data) {
     if (list->first_elem == NULL) {
         printf("Cannot delete from an empty list.\n");
@@ -40,7 +41,7 @@ void remove_list(tList *list, int del_data) {
         printf("Node with data %d not found in the list.\n", del_data);
     }
 }
-
+//Liberar memoria alcoada dinamicamente da lista
 void free_list(tList *list) {
     tNode* current = list->first_elem;
     tNode* temp;
@@ -53,7 +54,7 @@ void free_list(tList *list) {
 
     list->first_elem = NULL;  
 }
-
+//Mostrar a lista
 void print_list(tList *list) {
     tNode* current = list->first_elem;
 
@@ -64,7 +65,7 @@ void print_list(tList *list) {
     }
     printf("\n");
 }
-
+// Criador de lista
 tList create_list() {
     tList list;
     list.first_elem = NULL;  
